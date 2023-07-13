@@ -30,7 +30,6 @@ def get_fruityvise_data(this_fruit_choice):
     fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + this_fruit_choice)
     fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
     return fruityvice_normalized                   
-
 # New section to display fruitvise api responce
 streamlit.header("Fruityvice Fruit Advice!")
 try:
@@ -40,26 +39,32 @@ try:
      else:
           back_from_function = get_fruityvise_data(fruit_choice)
           streamlit.dataframe(back_from_functio)
-
 except URLErro as e:
   streamlit.error ()
+    
 
+streamlit.header("The fruit load list contains:")
+#showflake related function
+def get_fruit_load_list():
+    with my_cnx.cursor() as my_cur
+    my_cur.execute("select * from fruit_load_list")
+    return my_cur.fetchall()
+
+# add a button to load the fruit
+if streamlit.button('Get fruit load List'):
+   
+   my_data_rows = get_fruit_load_list()
+   streamlit.dataframe(my_data_rows)
 # dont run anything
 streamlit.stop()
-
-
-
-my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-my_cur = my_cnx.cursor()
-my_cur.execute("select * from fruit_load_list")
-my_data_rows = my_cur.fetchall()
-streamlit.header("The fruit load list contains:")
-streamlit.dataframe(my_data_rows)
-
 # allow the end user to add to the fruit list
-add_my_fruit = streamlit.text_input('What fruit would you like to add?','Jackfruit')
-streamlit.write('Thanks for adding  ', add_my_fruit)
-
-# this will not work correctly
-my_cur.execute("insert into fruit_load_list values ('from streamlit')")
-
+def insert_row_snowflake(new_friut):
+    with my_cnx.cursor() as my_cur
+    my_cur.execute("insert into fruit_load_list values ('from streamlit')")
+    return "Thanks for adding " +  new_fruit
+    
+add_my_fruit = streamlit.text_input('What fruit would you like to add?',')
+if streamlit.button(Add a fruit to the list) 
+   my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])                                 
+   back_from_function = insert_row_snowflake(add_my_fruit)
+   streamlit.text(back_from_function)
